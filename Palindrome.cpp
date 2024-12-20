@@ -7,7 +7,6 @@ public:
         int reversedNumber = 0;
         int originalNumber = x;
 
-       // Reverse the integer
         while (x > 0) {
           int digit = x % 10;
           reversedNumber = reversedNumber * 10 + digit;
