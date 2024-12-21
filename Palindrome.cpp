@@ -36,6 +36,5 @@ int main() {
     } else {
         cout << num << " is not a palindrome." << endl;
     }
-
     return 0;
 }
