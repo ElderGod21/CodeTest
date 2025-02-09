@@ -5,6 +5,10 @@
 using namespace std;
 
 bool searchMatrix(vector <vector<int>>& matrix, int target){
+
+    if (matrix.empty() || matrix[0].empty()) {
+        return false;
+    }
     int row = matrix.size();
     int col = matrix[0].size();
 
