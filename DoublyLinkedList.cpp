@@ -15,14 +15,15 @@ public:
         this->prev = NULL;
     }
 
-    ~Node(){
+    ~Node()
+    {
         int value = this->data;
-        if(next!=NULL){
+        if (next != NULL)
+        {
             delete next;
             next = NULL;
         }
-        cout<<"Memory free for node with data: "<< value<<endl;
-
+        cout << "Memory free for node with data: " << value << endl;
     }
 };
 
@@ -140,17 +141,19 @@ void deleteNode(Node *&head, int position)
         Node *temp = head;
         temp->next->prev = NULL;
         head = temp->next;
-        //memory free
+        // memory free
         temp->next = NULL;
         delete temp;
     }
 
-    else{
+    else
+    {
         int count = 1;
-        Node* curr = head;
-        Node* prev = NULL;
+        Node *curr = head;
+        Node *prev = NULL;
 
-        while(count< position-1){
+        while (count < position - 1)
+        {
             prev = curr;
             curr = curr->next;
             count++;
@@ -159,12 +162,33 @@ void deleteNode(Node *&head, int position)
         curr->next->prev = prev;
         curr->prev = NULL;
         curr->next = NULL;
-        
+
         delete curr;
     }
 
-    //Not handling tail in this
+    // Not handling tail in this
+}
 
+void reversal(Node *&head)
+{
+    int count = getLength(head);
+
+    Node *temp = head;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    head = temp;
+
+    Node *garbagePrev = temp->next;
+
+    for(int i = 0; i<count;i++)
+    {
+        garbagePrev = temp->next;
+        temp->next = temp->prev;
+        temp->prev = garbagePrev;
+        temp = temp->next; 
+    }
 }
 
 int main()
@@ -189,5 +213,9 @@ int main()
     print(head);
 
     insertAtPosition(head, 99, 3, tail);
+    print(head);
+
+    cout<<"After Reversal:"<< endl;
+    reversal(head);
     print(head);
 }

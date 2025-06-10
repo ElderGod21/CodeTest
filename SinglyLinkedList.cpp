@@ -7,22 +7,24 @@ public:
     int data;
     Node *next;
 
-    //constructor
+    // constructor
     Node(int data)
     {
         this->data = data;
         this->next = NULL;
     }
 
-    //destructor
-    ~Node(){
+    // destructor
+    ~Node()
+    {
         int value = this->data;
-        //memory free
-        if(this->next!=NULL){
+        // memory free
+        if (this->next != NULL)
+        {
             delete next;
             this->next = NULL;
         }
-        cout<<"Memory is free for node with data "<< value<<endl;
+        cout << "Memory is free for node with data " << value << endl;
     }
 };
 
@@ -84,73 +86,111 @@ void insertAtPosition(Node *&head, int d, int position, Node *&tail)
     p->next = temp;
 }
 
+// Deletion of Nodes
 
-//Deletion of Nodes 
+void deleteAtPos(Node *&head, int position, Node *&tail)
+{
 
-void deleteAtPos(Node* &head, int position, Node* &tail){
+    Node *temp = head;
 
-    Node* temp=head;
- 
-    //for head case
+    // for head case
 
-    if(position ==1){
-        head= temp->next;
-        temp->next= NULL;
-        delete(temp);
-        return ;
+    if (position == 1)
+    {
+        head = temp->next;
+        temp->next = NULL;
+        delete (temp);
+        return;
     }
 
     // for any middle
 
-    Node* p = head;
+    Node *p = head;
     int count = 1;
-    while(count !=position-1){
+    while (count != position - 1)
+    {
         temp = temp->next;
         p = p->next;
         count++;
     }
-    p =temp->next;
+    p = temp->next;
 
-    //for tail case
+    // for tail case
 
-    if(p->next==NULL){
-        temp->next=NULL;
-        tail = temp ;
-        delete(temp, p);
+    if (p->next == NULL)
+    {
+        temp->next = NULL;
+        tail = temp;
+        delete (temp, p);
         return;
     }
 
-    temp->next=p->next;
-    p->next=NULL;
+    temp->next = p->next;
+    p->next = NULL;
 
-    delete(temp, p);
+    delete (temp, p);
 }
 
-void deleteByValue(Node* &head, int value, Node* &tail){
-    Node* temp = head;
-    //for the head
-    if(temp->data==value){
+void deleteByValue(Node *&head, int value, Node *&tail)
+{
+    Node *temp = head;
+    // for the head
+    if (temp->data == value)
+    {
         head = head->next;
-        temp->next= NULL;
+        temp->next = NULL;
         delete temp;
     }
 
-    Node* prev = NULL;
-    while(temp->data!=value){
+    Node *prev = NULL;
+    while (temp->data != value)
+    {
 
         prev = temp;
-        if(temp->next==NULL){
+        if (temp->next == NULL)
+        {
             tail = temp;
             break;
         }
         temp = temp->next;
     }
 
-    prev->next= temp->next;
+    prev->next = temp->next;
     temp->next = NULL;
     delete temp;
 }
 
+// Linked List reversal in K groups
+
+Node *kReversal(Node *head, int k)
+{
+    if (head == NULL)
+    {
+        return head;
+    }
+
+    Node *next = NULL;
+    Node *curr = head;
+    Node *prev = NULL;
+
+    int count = 0;
+
+    while (curr != NULL && count < k)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        count++;
+    }
+
+    if (next != NULL)
+    {
+        head->next = kReversal(next, k);
+    }
+
+    return prev;
+}
 
 int main()
 {
